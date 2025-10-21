@@ -1,0 +1,41 @@
+/* src/styles/RegionPage.css */
+
+.region-page-wrapper {
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.region-navbar a {
+  text-decoration: none;
+  color: #333;
+}
+
+.region-navbar a:hover {
+  text-decoration: underline;
+  color: #004085;
+}
+
+.region-links .btn {
+  width: 280px;
+  font-size: 1rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.region-links .btn:hover {
+  filter: brightness(0.95);
+}
+
+.text-center h1,
+.region-page-wrapper h1 {
+  text-shadow: 1px 1px 2px #ffffff;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}

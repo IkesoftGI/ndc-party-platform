@@ -1,0 +1,34 @@
+.news-ticker-container {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  padding: 8px 0;
+  border-top: 2px solid #ffc107;
+  border-bottom: 2px solid #ffc107;
+}
+
+.news-ticker-wrapper {
+  display: inline-block;
+  animation: ticker-scroll 40s linear infinite;
+}
+
+.news-ticker-content {
+  display: inline-flex;
+  gap: 3rem;
+}
+
+.news-ticker-item {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #fff;
+  white-space: nowrap;
+}
+
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

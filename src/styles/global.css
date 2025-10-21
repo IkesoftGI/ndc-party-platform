@@ -1,0 +1,115 @@
+/* ✅ Reusable card styles for Regional Ministers */
+
+.regional-minister-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 0.25rem;
+}
+
+.regional-minister-status {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+/* 🔹 Executives Page Container */
+.executives-page {
+  background-color: #3f5372; /* default dark background */
+  padding-top: 2rem;
+  min-height: 100vh;
+}
+
+/* Optional: variant for light mode */
+.executives-page.light {
+  background-color: #f8f9fa;
+  color: #222;
+}
+
+/* 🔹 Executive Cards (basic structure only, no overlaps) */
+.executive-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1.5rem;
+  width: 250px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.executive-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 🔹 Executive Image (fixed scale, no overflow or hover zoom) */
+.executive-image {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+/* 🔹 Executive Text */
+.executive-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #222;
+}
+
+.executive-position {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.executive-status {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #198754; /* green for 'Current' */
+  margin-bottom: 0.25rem;
+}
+
+.executive-status.past {
+  color: #6c757d; /* Bootstrap gray for 'Past' */
+}
+
+.executive-term {
+  font-size: 0.95rem;
+  color: #2109f7;
+  margin-bottom: 0.5rem;
+}
+
+.executive-bio {
+  font-size: 0.95rem;
+  color: inherit; /* follows page context */
+}
+
+/* 🔹 Containers */
+.executive-section-container {
+  background-color: rgb(40, 57, 73);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* 🔹 Decorative Elements */
+.elephant-image {
+  max-width: 300px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.elephant-image:hover {
+  transform: scale(1.05);
+}
+
+hr {
+  border-top: 2px solid #664e8d;
+  margin: 2rem 0;
+}

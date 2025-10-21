@@ -1,0 +1,57 @@
+// src/data/ghRegions.ts
+export const REGIONS: string[] = [
+  "Ahafo",
+  "Ashanti",
+  "Bono",
+  "Bono East",
+  "Central",
+  "Eastern",
+  "Greater Accra",
+  "Northern",
+  "North East",
+  "Oti",
+  "Savannah",
+  "Upper East",
+  "Upper West",
+  "Volta",
+  "Western",
+  "Western North",
+];
+
+// Constituencies (start with Greater Accra; add others as you go)
+export const CONSTITUENCIES: Record<string, string[]> = {
+  "Greater Accra": [
+    "Ablekuma Central",
+    "Ablekuma North",
+    "Ablekuma West",
+    "Amasaman",
+    "Anyaa-Sowutuom",
+    "Ayawaso Central",
+    "Ayawaso East",
+    "Ayawaso North",
+    "Ayawaso West Wuogon",
+    "Bortianor-Ngleshie-Amanfro",
+    "Dade-Kotopon",
+    "Dome-Kwabenya",
+    "Klottey-Korle",
+    "Krowor",
+    "Korle Klottey", // some use this spelling; keep both if needed
+    "La Dade-Kotopon",
+    "Ledzokuku",
+    "Madina",
+    "Okaikwei Central",
+    "Okaikwei North",
+    "Okaikwei South",
+    "Odododiodioo",
+    "Sege",
+    "Shai-Osudoku",
+    "Ningo-Prampram",
+    "Tema East",
+    "Tema Central",
+    "Tema West",
+    "Ashaiman",
+    "Adenta",
+    "Weija-Gbawe",
+  ],
+  // TODO: Add the rest region-by-region
+};

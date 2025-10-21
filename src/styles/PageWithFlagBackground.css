@@ -1,0 +1,37 @@
+/* src/styles/PageWithFlagBackground.css */
+
+/* Use relative path from this CSS file to src/assets */
+.page-with-flag {
+  background-image: url("../assets/ChatGPT-NPP.webp"); /* ✅ corrected */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-with-flag .main-content {
+  background-color: #f8f9fa; /* Light gray */
+  flex: 1;
+  padding-top: 200px; /* Space for flag header */
+}
+
+.page-flag-bg {
+  background-image: url("../assets/ChatGPT-NPP.webp"); /* ✅ corrected */
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  color: white;
+}
+
+.flag-header h1 {
+  font-size: 2.2rem;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.5); /* translucent dark background */
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 12px;
+  color: white;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+}

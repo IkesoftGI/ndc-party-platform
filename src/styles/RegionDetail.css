@@ -1,0 +1,56 @@
+/* src/styles/RegionDetail.css */
+
+.executives-page {
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.executives-heading {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #002366;
+}
+
+.executives-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding-top: 1rem;
+}
+
+.executive-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1.5rem;
+  width: 300px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+  text-align: center;
+}
+
+.executive-card:hover {
+  transform: translateY(-5px);
+}
+
+.executive-image {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.executive-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #222;
+}
+
+.executive-title {
+  font-size: 1rem;
+  color: #555;
+}

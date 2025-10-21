@@ -1,0 +1,59 @@
+# ===============================
+# 🚫 Node / Build / Cache
+# ===============================
+node_modules/
+dist/
+build/
+.cache/
+.vite/
+.tmp/
+temp/
+.DS_Store
+
+# ===============================
+# 🔐 Environment / Config Files
+# ===============================
+.env
+.env.local
+.env.production
+.env.development
+.env.test
+
+# ===============================
+# 🗂️ Logs / Reports
+# ===============================
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# ===============================
+# 🖼️ Uploads / User-generated Files
+# ===============================
+npp-backend/public/uploads/
+public/uploads/
+uploads/
+
+# ===============================
+# ⚙️ OS & Editor files
+# ===============================
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ===============================
+# 💾 Compiled Output
+# ===============================
+*.out
+*.lock
+*.pid
+*.seed
+*.tsbuildinfo
+
+# ===============================
+# 🧪 Test Coverage / Reports
+# ===============================
+coverage/
