@@ -14,22 +14,22 @@ const withFallback = (media?: string[]) =>
 
 export const blogPosts: BlogPost[] = [
   {
-    id: "npp-delegates-2025-overview",
-    title: "NPP Holds 2025 National Delegates Conference in Kumasi",
+    id: "ndc-delegates-2025-overview",
+    title: "NDC Holds 2025 National Delegates Conference in Kumasi",
     excerpt:
       "A historic gathering of party leaders and delegates to shape the party's future.",
     content:
-      "The New Patriotic Party held its highly anticipated 2025 National Delegates Conference in Kumasi...",
+      "The National Democratic Congress held its highly anticipated 2025 National Delegates Conference in Kumasi...",
     date: "2025-08-01",
     readingTime: "3 min read",
     media: withFallback([DelegatesMain]),
-    authorId: "npp-national-team",
+    authorId: "ndc-national-team",
     categories: ["Party Activities"],
     scope: "national",
     comments: [],
   },
   {
-    id: "npp-delegates-2025-executives",
+    id: "ndc-delegates-2025-executives",
     title: "Executives Address the Nation at 2025 Delegates Conference",
     excerpt:
       "National executives of the NPP delivered inspiring messages of unity, progress, and hope.",
@@ -38,13 +38,13 @@ export const blogPosts: BlogPost[] = [
     date: "2025-08-02",
     readingTime: "2 min read",
     media: withFallback([DelegatesExec]),
-    authorId: "npp-national-team",
+    authorId: "ndc-national-team",
     categories: ["General", "Announcements"],
     scope: "national",
     comments: [],
   },
   {
-    id: "npp-delegates-2025-memories",
+    id: "ndc-delegates-2025-memories",
     title: "Scenes from the 2025 NPP Delegates Conference",
     excerpt:
       "Relive powerful moments from Kumasi as the party came together in grand style.",
@@ -53,7 +53,7 @@ export const blogPosts: BlogPost[] = [
     date: "2025-08-03",
     readingTime: "1 min read",
     media: withFallback([DelegatesScenes]),
-    authorId: "npp-national-team",
+    authorId: "ndc-national-team",
     categories: ["Events", "Photos"],
     scope: "national",
     comments: [],
@@ -63,18 +63,18 @@ export const blogPosts: BlogPost[] = [
     title: "Party Pushback Against Allegations",
     excerpt: "Party leadership responds to recent media claims.",
     content:
-      "The NPP leadership has issued a firm response to allegations circulated...",
+      "The NDC leadership has issued a firm response to allegations circulated...",
     date: "2025-08-04",
     readingTime: "2 min read",
     media: withFallback([blockedPushbackImage]),
-    authorId: "npp-national-team",
+    authorId: "ndc-national-team",
     categories: ["Press", "Defense"],
     scope: "national",
     comments: [],
   },
   {
     id: "001",
-    title: "NPP Unveils National Policy",
+    title: "NDC Unveils National Policy",
     excerpt: "Details about the newly launched national policy...",
     content: "Details about the newly launched national policy...",
     date: "2025-08-01",
@@ -95,7 +95,7 @@ export const blogPosts: BlogPost[] = [
     author: "Greater Accra PR Unit",
     scope: "regional",
     region: "greater-accra",
-    headline: "🎤 Greater Accra Hosts Massive NPP Rally",
+    headline: "🎤 Greater Accra Hosts Massive NDC Rally",
     media: withFallback([]), // ✅ now real image
     comments: [],
   },
@@ -118,11 +118,11 @@ export const blogPosts: BlogPost[] = [
 
 {
   id: "greater-accra-chairman-2028",
-  title: "Greater Accra Chairman Declares 'Operation 30 Seats for NPP' in 2028",
+  title: "Greater Accra Chairman Declares 'Operation 30 Seats for NDC' in 2028",
   excerpt:
     "The Greater Accra Regional Chairman has declared a bold mission for the party ahead of the 2028 elections.",
   content:
-    "In a charged atmosphere, the Greater Accra Regional Chairman of the New Patriotic Party unveiled a new campaign dubbed 'Operation 30 Seats for NPP'. The initiative seeks to secure at least 30 parliamentary seats in the Greater Accra Region during the 2028 general elections...",
+    "In a charged atmosphere, the Greater Accra Regional Chairman of the New Patriotic Party unveiled a new campaign dubbed 'Operation 30 Seats for NDC'. The initiative seeks to secure at least 30 parliamentary seats in the Greater Accra Region during the 2028 general elections...",
   date: "2025-09-01",
   readingTime: "3 min read",
   author: "Greater Accra Regional Communications",
@@ -167,7 +167,7 @@ export const blogPosts: BlogPost[] = [
 },
 {
   id: "dome-kwabenya-primaries-2024",
-  title: "Dome-Kwabenya 2024 NPP Internal Primaries Contestants Smoke Peace Pipe",
+  title: "Dome-Kwabenya 2024 NDC Internal Primaries Contestants Smoke Peace Pipe",
   excerpt:
     "After a heated internal primary, contestants in Dome-Kwabenya have united to pledge peace and collaboration.",
   content:
@@ -184,7 +184,7 @@ export const blogPosts: BlogPost[] = [
 },
 {
   id: "dome-kwabenya-adwoa-safo-apology",
-  title: "Former MP Adwoa Safo Apologizes to the NPP Family and Constituency",
+  title: "Former MP Adwoa Safo Apologizes to the NDC Family and Constituency",
   excerpt:
     "Adwoa Safo has rendered an unqualified apology to the party and Dome-Kwabenya constituency for past issues.",
   content:

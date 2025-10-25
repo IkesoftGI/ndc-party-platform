@@ -21,7 +21,7 @@ const defaultPost: Omit<BlogPost, "scope"> = {
   title: "",
   excerpt: "",
   content: "",
-  authorId: "NPP Communications",
+  authorId: "NDC Communications",
   date: new Date().toISOString().split("T")[0],
   readingTime: "2 min read",
   categories: [],

@@ -1,11 +1,12 @@
 {
-  "name": "ikesoft-party-platform",
+  "name": "ndc-party-platform",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "description": "Official NDC Party Platform App built by IKESOFT Global Initiative",
   "scripts": {
-    "dev": "concurrently -k -n VITE,BACKEND -c auto \"vite --port 5173 --strictPort\" \"npm:backend\"",
-    "backend": "npm run dev --prefix npp-backend",
+    "dev": "concurrently -k -n VITE,BACKEND -c auto \"vite --port 5183 --strictPort\" \"npm:backend\"",
+    "backend": "npm run dev --prefix ndc-backend",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "cap:android": "npm run build && npx cap copy android && npx cap open android",
@@ -52,6 +53,5 @@
     "rimraf": "^6.0.1",
     "uuid": "^13.0.0",
     "vite-plugin-pwa": "^0.20.0"
-
   }
 }

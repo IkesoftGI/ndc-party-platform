@@ -13,7 +13,7 @@ const defaultPost: BlogPost = {
   title: "",
   excerpt: "",
   content: "",
-  authorId: "NPP Communications", // ✅ fixed!
+  authorId: "NDC Communications", // ✅ fixed!
   date: new Date().toISOString().split("T")[0],
   readingTime: "2 min read",
   categories: [],

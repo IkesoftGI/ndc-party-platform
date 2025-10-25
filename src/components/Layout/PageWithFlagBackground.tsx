@@ -1,7 +1,7 @@
 // src/components/Layout/PageWithFlagBackground.tsx
 import React from "react";
 import FloatingBanner from "../FloatingBanner";
-import nppFlag from "../../assets/ChatGPT-NPP.webp";
+import ndcFlag from "../../assets/ChatGPT-NDC.png";
 import "../../styles/PageWithFlagBackground.css";
 
 interface PageWithFlagBackgroundProps {
@@ -19,7 +19,7 @@ const PageWithFlagBackground: React.FC<PageWithFlagBackgroundProps> = ({
     <div
       className="page-flag-bg"
       style={{
-        backgroundImage: `url(${customBackground || nppFlag})`,
+        backgroundImage: `url(${customBackground || ndcFlag})`,
         backgroundSize: "contain",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center top",
@@ -38,7 +38,7 @@ const PageWithFlagBackground: React.FC<PageWithFlagBackgroundProps> = ({
 
       <section className="text-center pt-5">
         <img
-          src={nppFlag}
+          src={ndcFlag}
           alt="NPP Flag Bottom"
           className="img-fluid mb-4"
           style={{ maxHeight: "120px" }}

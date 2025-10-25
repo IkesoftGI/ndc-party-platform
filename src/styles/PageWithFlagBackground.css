@@ -2,7 +2,7 @@
 
 /* Use relative path from this CSS file to src/assets */
 .page-with-flag {
-  background-image: url("../assets/ChatGPT-NPP.webp"); /* ✅ corrected */
+  background-image: url("../assets/ChatGPT-NDC.png"); /* ✅ corrected */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center top;
@@ -18,7 +18,7 @@
 }
 
 .page-flag-bg {
-  background-image: url("../assets/ChatGPT-NPP.webp"); /* ✅ corrected */
+  background-image: url("../assets/ChatGPT-NDC.png"); /* ✅ corrected */
   background-size: cover;
   background-position: center;
   min-height: 100vh;

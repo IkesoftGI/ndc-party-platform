@@ -1,3 +1,5 @@
+// src\data\elders.ts
+
 import sekyeHughes from "../assets/national Council of elders/Mr Sekyi Hughes-Member.jpg";
 import ckTedam from "../assets/national Council of elders/Clement Kubindiwor Tedam-Chairman.jpg";
 import yiremia from "../assets/national Council of elders/Alhaji Yiremia-Member.jpg";

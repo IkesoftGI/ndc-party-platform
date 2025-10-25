@@ -15,57 +15,56 @@ export default defineConfig({
     react(),
     tsconfigPaths(),
 
-    // ✅ Progressive Web App (PWA) Setup
+    // ✅ Progressive Web App (PWA) Setup — Refactored for NDC
     VitePWA({
-      // --- core PWA behavior ---
       registerType: "autoUpdate",
-      strategies: "generateSW", // ✅ ensures service worker & manifest are generated
-      injectRegister: "auto",   // ✅ injects the register script automatically
-      manifestFilename: "manifest.webmanifest", // ✅ forces file to appear in /dist
+      strategies: "generateSW",
+      injectRegister: "auto",
+      manifestFilename: "manifest.webmanifest",
 
       includeAssets: [
         "favicon.ico",
         "apple-touch-icon.png",
-        "party-platform-logo.png",
+        "ndc-logo.png", // ✅ Updated logo
       ],
 
       manifest: {
-        name: "NPP Party Platform",
-        short_name: "NPP Platform",
-        description: "The official Party Platform App for the NPP.",
-        theme_color: "#002868", // Party Blue
-        background_color: "#ffffff",
+        name: "NDC Party Platform",
+        short_name: "NDC Platform",
+        description:
+          "The official digital platform of the National Democratic Congress (NDC) — uniting leadership, progress, and vision for Ghana.",
+        theme_color: "#00843D", // ✅ NDC Green
+        background_color: "#FFFFFF",
         display: "standalone",
         orientation: "portrait-primary",
         start_url: "/",
         scope: "/",
         icons: [
           {
-            src: "/party-platform-logo.png",
+            src: "/ndc-logo.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "any maskable",
           },
           {
-            src: "/icons/icon-192x192.png",
+            src: "/icons/ndc-icon-192x192.png",
             sizes: "192x192",
             type: "image/png",
           },
           {
-            src: "/icons/icon-512x512.png",
+            src: "/icons/ndc-icon-512x512.png",
             sizes: "512x512",
             type: "image/png",
           },
         ],
       },
 
-      // ✅ Enable offline caching & runtime caching
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg,webp}"],
         runtimeCaching: [
           {
-            // Cache backend API requests
-            urlPattern: /^https:\/\/npp-backend\.onrender\.com\/api\/users/,
+            // ✅ Backend API caching for NDC backend
+            urlPattern: /^https:\/\/ndc-backend\.onrender\.com\/api\/users/,
             handler: "NetworkFirst",
             options: {
               cacheName: "api-cache",
@@ -76,7 +75,7 @@ export default defineConfig({
             },
           },
           {
-            // Cache images
+            // ✅ Image caching
             urlPattern: ({ request }) => request.destination === "image",
             handler: "CacheFirst",
             options: {
@@ -119,7 +118,7 @@ export default defineConfig({
     },
   },
 
-  build: {
+    build: {
     chunkSizeWarningLimit: 1500,
     rollupOptions: {
       output: {
@@ -138,5 +137,12 @@ export default defineConfig({
         },
       },
     },
+  },
+
+  // ✅ Add this block below build
+  preview: {
+    port: 4175, // Custom preview port for NDC Party Platform
+    strictPort: true,
+    open: true, // Automatically opens the browser when preview starts
   },
 });

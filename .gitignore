@@ -31,7 +31,7 @@ pnpm-debug.log*
 # ===============================
 # 🖼️ Uploads / User-generated Files
 # ===============================
-npp-backend/public/uploads/
+ndc-backend/public/uploads/
 public/uploads/
 uploads/
 

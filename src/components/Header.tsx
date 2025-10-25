@@ -1,6 +1,6 @@
 // src/components/Header.tsx
 import { Link, useNavigate } from "react-router-dom";
-import partyLogo from "@assets/logo/party-platform-logo.png"; // ✅ New Logo
+import partyLogo from "@assets/logo/party-platform-logo.png"; // ✅ Replace this image with NDC umbrella logo (NDC.png)
 import { useAuth } from "../context/AuthContext";
 import type { User } from "../types/User";
 
@@ -26,9 +26,9 @@ export default function Header() {
   return (
     <header
       style={{
-        backgroundColor: "#002868",
+        background: "linear-gradient(90deg, #00843D 0%, #E71D36 50%, #000000 100%)",
         color: "white",
-        boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+        boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
       }}
     >
       {/* ✅ Top Row: Brand with Logo */}
@@ -42,17 +42,25 @@ export default function Header() {
       >
         <img
           src={partyLogo}
-          alt="NPP Party Platform Logo"
+          alt="NDC Party Platform Logo"
           style={{
-            width: 42,
-            height: 42,
+            width: 46,
+            height: 46,
             borderRadius: "8px",
             backgroundColor: "white",
             padding: "3px",
           }}
         />
-        <h1 style={{ fontSize: "1.25rem", margin: 0, fontWeight: 700 }}>
-          NPP Party Platform
+        <h1
+          style={{
+            fontSize: "1.3rem",
+            margin: 0,
+            fontWeight: 700,
+            letterSpacing: "0.5px",
+            color: "white",
+          }}
+        >
+          NDC Party Platform
         </h1>
       </div>
 
@@ -62,18 +70,16 @@ export default function Header() {
         style={{
           display: "flex",
           alignItems: "center",
-          gap: "0.6rem",
+          gap: "0.8rem",
           padding: "0.4rem 1rem 0.6rem",
           flexWrap: "nowrap",
           overflowX: "auto",
+          backgroundColor: "rgba(0,0,0,0.15)",
         }}
       >
-        {/* National Headquarters */}
         <Link className="navlink" to="/nhqt" style={{ fontSize: "0.9rem" }}>
-          NHQT
+          HQ
         </Link>
-
-        {/* Other links */}
         <Link className="navlink" to="/presidents" style={{ fontSize: "0.9rem" }}>
           Presidents
         </Link>
@@ -85,7 +91,7 @@ export default function Header() {
           to="/founding-fathers"
           style={{ fontSize: "0.9rem" }}
         >
-          Fathers
+          Founders
         </Link>
         <Link
           className="navlink"
@@ -98,12 +104,19 @@ export default function Header() {
           Elders
         </Link>
 
-        {/* Login / Logout */}
         {isAuthenticated ? (
           <button
             className="navbtn"
             onClick={handleLogout}
-            style={{ fontSize: "0.9rem" }}
+            style={{
+              fontSize: "0.9rem",
+              backgroundColor: "#E71D36",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              padding: "0.25rem 0.7rem",
+              cursor: "pointer",
+            }}
           >
             Logout
           </button>
@@ -113,7 +126,6 @@ export default function Header() {
           </Link>
         )}
 
-        {/* Admin-only links */}
         {user?.role === "executive" && (
           <>
             <Link
