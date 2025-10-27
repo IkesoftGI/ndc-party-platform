@@ -1,8 +1,8 @@
 // src/pages/NationalHQPage.tsx
 import React from "react";
 import { Link } from "react-router-dom";
-import elephantIcon from "../assets/elephant-icon.webp";
-import nppFlag from "../assets/ChatGPT-NPP.webp";
+import  umbrellaIcon from "../assets/NDC.png";
+import ndcFlag from "../assets/NDC.png";
 import { blogPosts } from "@data/blogPosts";
 import "../styles/Home.css";
 import FloatingBanner from "../components/FloatingBanner";
@@ -16,7 +16,7 @@ const NationalHQPage: React.FC = () => {
     <div
       className="nhqt-page text-white"
       style={{
-        backgroundImage: `url(${nppFlag})`,
+        backgroundImage: `url(${ndcFlag})`,
         backgroundSize: "contain",
         backgroundPosition: "center top",
         backgroundColor: "#486f94ff",
@@ -73,9 +73,9 @@ const NationalHQPage: React.FC = () => {
       {/* Elephant Icon */}
       <section className="text-center pt-5">
         <img
-          src={elephantIcon}
-          alt="Big Elephant"
-          className="img-fluid standing-elephant"
+          src={umbrellaIcon}
+          alt="Big umbrella "
+          className="img-fluid standing-umbrella "
         />
       </section>
     </div>

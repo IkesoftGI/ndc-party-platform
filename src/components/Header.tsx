@@ -1,6 +1,6 @@
 // src/components/Header.tsx
 import { Link, useNavigate } from "react-router-dom";
-import partyLogo from "@assets/logo/party-platform-logo.png"; // ✅ Replace this image with NDC umbrella logo (NDC.png)
+import ndcFlag from "../assets/NDC.png";   // ✅ Replace this image with NDC umbrella logo (NDC.png)
 import { useAuth } from "../context/AuthContext";
 import type { User } from "../types/User";
 
@@ -41,7 +41,7 @@ export default function Header() {
         }}
       >
         <img
-          src={partyLogo}
+          src={ndcFlag }
           alt="NDC Party Platform Logo"
           style={{
             width: 46,

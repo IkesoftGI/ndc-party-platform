@@ -57,3 +57,4 @@ Thumbs.db
 # 🧪 Test Coverage / Reports
 # ===============================
 coverage/
+.vercel

@@ -4,8 +4,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ExploreRegionsNavbar from "@components/Navbars/ExploreRegionsNavbar";
 import RegionalNavbar from "@components/Navbars/RegionalNavbar";
-import nppFlag from "@assets/ChatGPT-NPP.webp";
-import elephantIcon from "@assets/elephant-icon.webp";
+import ndcFlag from "@assets/NDC.png";
+import umbrellaIcon from "@assets/NDC.png";
 import "@styles/Home.css";
 
 const UpperEastConstituenciesList: React.FC = () => {
@@ -31,7 +31,7 @@ const UpperEastConstituenciesList: React.FC = () => {
     <div
       className="home-page text-white"
       style={{
-        backgroundImage: `url(${nppFlag})`,
+        backgroundImage: `url(${ndcFlag})`,
         backgroundSize: "contain",
         backgroundPosition: "center top",
         backgroundColor: "#2c3e50",
@@ -71,9 +71,9 @@ const UpperEastConstituenciesList: React.FC = () => {
       {/* Elephant Icon at Bottom */}
       <section className="text-center pt-5">
         <img
-          src={elephantIcon}
-          alt="Elephant"
-          className="img-fluid standing-elephant"
+          src={umbrellaIcon}
+          alt="umbrella"
+          className="img-fluid standing-umbrella"
         />
       </section>
     </div>

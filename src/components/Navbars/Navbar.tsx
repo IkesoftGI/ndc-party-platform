@@ -1,7 +1,7 @@
 // src/components/Navbars/Navbar.tsx
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import umbrellaIcon from "@assets/logo/party-platform-logo.png"; // ✅ Use NDC umbrella logo (rename your NDC.png to this)
+import umbrellaIcon from "@assets/NDC.png"; // ✅ Use NDC umbrella logo (rename your NDC.png to this)
 import { useAuth } from "../../context/AuthContext";
 import type { User } from "../../types/User";
 

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import elephantIcon from "@assets/elephant-icon.webp";
+import  umbrellaicon from "@assets/NDC.png";
 
 export default function Dashboard() {
   const [backendStatus, setBackendStatus] = useState<"checking" | "ok" | "error">("checking");
@@ -41,8 +41,8 @@ export default function Dashboard() {
       )}
 
       {/* 🐘 Logo & Welcome */}
-      <img src={elephantIcon} alt="NPP Elephant Logo" style={{ width: 150 }} />
-      <h1 className="mt-3">Welcome To New Patriotic Party Platform</h1>
+      <img src={ umbrellaicon} alt="NDC  umbrella  Icon" style={{ width: 150 }} />
+      <h1 className="mt-3">Welcome To National Democratic Congress Platform</h1>
       <p className="lead">Explore the pages below</p>
 
       {/* ✅ Distinct buttons with correct routes */}

@@ -1,6 +1,6 @@
-import elephantIcon from "../assets/elephant-icon.webp";
-import akufoAddoImg from "../assets/President-Akuffo-Addo.jpg";
-import kufuorImg from "../assets/President Kuffuor.jpg";
+import umbrellaIcon from "../assets/NDC.png";
+import president1Img from "../assets/NDC.png";
+import president2Img from "../assets/NDC.png";
 import "./Presidents.css";
 
 export default function Presidents() {
@@ -15,7 +15,7 @@ export default function Presidents() {
 
           <div className="presidents-grid">
             <div className="president-card">
-              <img src={akufoAddoImg} alt="H.E. Nana Addo Dankwa Akufo-Addo" className="president-image" />
+              <img src={president1Img} alt="H.E. Nana Addo Dankwa Akufo-Addo" className="president-image" />
               <h4 className="president-name">H.E. Nana Addo Dankwa Akufo-Addo</h4>
               <p className="president-label">President of Ghana (2017–2024)</p>
               <p>
@@ -26,7 +26,7 @@ export default function Presidents() {
             </div>
 
             <div className="president-card">
-              <img src={kufuorImg} alt="H.E. John Agyekum Kufuor" className="president-image" />
+              <img src={president2Img} alt="H.E. John Agyekum Kufuor" className="president-image" />
               <h4 className="president-name">H.E. John Agyekum Kufuor</h4>
               <p className="president-label">President of Ghana (2001–2009)</p>
               <p>
@@ -42,7 +42,7 @@ export default function Presidents() {
       {/* Big Elephant Section */}
       <section className="text-center my-5">
         <img
-          src={elephantIcon}
+          src={umbrellaIcon}
           alt="Big Elephant Symbol"
           className="img-fluid mx-auto d-block"
           style={{ maxHeight: "400px", width: "auto", objectFit: "contain" }}

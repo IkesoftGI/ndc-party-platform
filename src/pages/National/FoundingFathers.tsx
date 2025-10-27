@@ -1,17 +1,15 @@
-// src/pages/FoundingFathers.tsx
+// src/pages/National/FoundingFathers.tsx
 
 import { Link } from "react-router-dom";
-import danquahImg from "../../assets/Dr J. B Danquah.jpg";
-import busiaImg from "../../assets/Dr-K.-A-Busia.jpg";
-import domboImg from "../../assets/S. D Dombo.jpg";
-import "../../styles/FoundingFathers.css"; // NEW: Separate CSS file
+import ndcLogo from "../../assets/NDC.png";
+import "../../styles/FoundingFathers.css";
 
 export default function FoundingFathers() {
   return (
     <div className="founders-page">
       <main className="main-content container py-5">
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <h2 className="founders-heading">🏛️ Founding Fathers of the Party</h2>
+          <h2 className="founders-heading">🏛️ Founding Fathers of the NDC</h2>
           <Link to="/" className="btn btn-primary">← Back</Link>
         </div>
 
@@ -19,46 +17,46 @@ export default function FoundingFathers() {
           <div className="founders-grid">
             <div className="founder-card">
               <img
-                src={danquahImg}
-                alt="Dr. J. B. Danquah"
+                src={ndcLogo}
+                alt="Jerry John Rawlings"
                 className="founder-image"
               />
-              <h4 className="founder-name">Dr. J. B. Danquah</h4>
-              <p className="founder-title">Founding Father</p>
+              <h4 className="founder-name">Flt. Lt. Jerry John Rawlings</h4>
+              <p className="founder-title">Founder & Visionary Leader</p>
               <p>
-                A pioneering intellectual and politician, Dr. Danquah is widely
-                revered for championing democratic values and laying the
-                philosophical foundation of the party.
+                Founder of the National Democratic Congress (NDC), known for his
+                leadership, revolutionary spirit, and dedication to social justice
+                and national unity.
               </p>
             </div>
 
             <div className="founder-card">
               <img
-                src={busiaImg}
-                alt="Dr. K. A. Busia"
+                src={ndcLogo}
+                alt="Dr. Obed Asamoah"
                 className="founder-image"
               />
-              <h4 className="founder-name">Dr. K. A. Busia</h4>
-              <p className="founder-title">Founding Father</p>
+              <h4 className="founder-name">Dr. Obed Asamoah</h4>
+              <p className="founder-title">Founding Member</p>
               <p>
-                A respected scholar and former Prime Minister, Dr. Busia's
-                leadership and policies helped shape the party's
-                socio-political direction and national development.
+                A key architect of the party’s constitution and long-serving legal
+                advisor who played a central role in shaping NDC’s democratic
+                foundation.
               </p>
             </div>
 
             <div className="founder-card">
               <img
-                src={domboImg}
-                alt="S. D. Dombo"
+                src={ndcLogo}
+                alt="Alhaji Iddrisu Mahama"
                 className="founder-image"
               />
-              <h4 className="founder-name">S. D. Dombo</h4>
-              <p className="founder-title">Founding Father</p>
+              <h4 className="founder-name">Alhaji Iddrisu Mahama</h4>
+              <p className="founder-title">Founding Member</p>
               <p>
-                S. D. Dombo was instrumental in mobilizing support in the
-                northern regions and strongly advocated for inclusive
-                development across Ghana.
+                A respected statesman whose contribution to the formation of the
+                NDC emphasized inclusiveness and grassroots political engagement
+                across Ghana.
               </p>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import elephantIcon from "@assets/elephant-icon.webp";
-import nppFlag from "@assets/ChatGPT-NPP.webp";
+import umbrellaIcon from "@assets/NDC.png";
+import ndcFlag from "@assets/NDC.png";
 import FloatingBanner from "@components/FloatingBanner";
 import ExploreRegionsNavbar from "@components/Navbars/ExploreRegionsNavbar";
 import ConstituencyNavbar from "@components/Navbars/ConstituencyNavbar";
@@ -51,7 +51,7 @@ const ConstituencyPage: React.FC<ConstituencyPageProps> = ({ regionParam, consti
     <div
       className="home-page text-white"
       style={{
-        backgroundImage: `url(${nppFlag})`,
+        backgroundImage: `url(${ndcFlag})`,
         backgroundSize: "contain",
         backgroundPosition: "center top",
         backgroundColor: "#565753ff",
@@ -82,7 +82,7 @@ const ConstituencyPage: React.FC<ConstituencyPageProps> = ({ regionParam, consti
       </section>
 
       <section className="text-center pt-5">
-        <img src={elephantIcon} alt="Big Elephant" className="img-fluid standing-elephant" />
+        <img src={umbrellaIcon} alt="Big Elephant" className="img-fluid standing-elephant" />
       </section>
     </div>
   );

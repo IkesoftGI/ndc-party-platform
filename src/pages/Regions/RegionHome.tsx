@@ -1,8 +1,8 @@
 // src/pages/Regions/RegionHome.tsx
 import React, { useEffect, useState, Suspense } from "react";
 import { Link } from "react-router-dom";
-import elephantIcon from "@assets/elephant-icon.webp";
-import nppFlag from "@assets/ChatGPT-NPP.webp";
+import  umbrellaicon from "@assets/NDC.png";
+import ndcFlag from "@assets/NDC.png";
 import FloatingBanner from "@components/FloatingBanner";
 import RegionalNavbar from "@components/Navbars/RegionalNavbar";
 import ExploreRegionsNavbar from "@components/Navbars/ExploreRegionsNavbar";
@@ -47,7 +47,7 @@ const RegionHome: React.FC<RegionHomeProps> = ({ region, pathPrefix }) => {
     <div
       className="home-page text-white"
       style={{
-        backgroundImage: `url(${nppFlag})`,
+        backgroundImage: `url(${ndcFlag})`,
         backgroundSize: "contain",
         backgroundPosition: "center top",
         backgroundColor: "#030577ff",
@@ -90,7 +90,7 @@ const RegionHome: React.FC<RegionHomeProps> = ({ region, pathPrefix }) => {
       </section>
 
       <section className="text-center pt-5">
-        <img src={elephantIcon} alt="Big Elephant" className="img-fluid standing-elephant" />
+        <img src={ umbrellaicon} alt="Big Elephant" className="img-fluid standing-elephant" />
       </section>
     </div>
   );

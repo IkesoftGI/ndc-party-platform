@@ -1,15 +1,15 @@
 // src/components/Footer.tsx
 
 import { Container } from "react-bootstrap";
-import elephantIcon from "@assets/elephant-icon.webp";
+import ndcLogo from "../assets/NDC.png";
 
 export default function Footer() {
   return (
     <footer className="bg-light text-center py-4 border-top mt-5">
       <Container>
         <img
-          src={elephantIcon}
-          alt="Elephant Icon"
+          src={ndcLogo}
+          alt="ndc Logo"
           width={40}
           height={40}
           className="mb-2"
