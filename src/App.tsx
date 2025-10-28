@@ -1,7 +1,7 @@
 // src/App.tsx
 
 import Login from "./pages/Login";
-import React, { useEffect, Suspense } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useLocation, useNavigate, Routes, Route, Navigate } from "react-router-dom";
 import NationalHQPage from "./pages/NationalHQPage";
 import Header from "./components/Header"; // ✅ adjust if needed
@@ -416,6 +416,25 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  // 🚧 TEMPORARY BACKEND CONNECTION TEST (REMOVE AFTER VERIFICATION)
+  const [backendStatus, setBackendStatus] = useState<string>("⏳ Checking backend connection...");
+
+  useEffect(() => {
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    if (!backendUrl) return;
+
+    fetch(`${backendUrl}/health`)
+      .then(async (res) => {
+        if (!res.ok) throw new Error("Backend not reachable");
+        const data = await res.json();
+        setBackendStatus(`✅ Connected to ${data.service} • Version: ${data.version}`);
+      })
+      .catch(() => {
+        setBackendStatus("❌ Backend not reachable");
+      });
+  }, []);
+  // 🚧 END OF TEMPORARY BACKEND CONNECTION TEST
+
   const hideUIOnPaths = ["/self-placement", "/national-executives"];
   const shouldHideHeader = hideUIOnPaths.includes(location.pathname);
 
@@ -451,6 +470,20 @@ function App() {
       {/* ✅ Header only when allowed */}
       {!shouldHideHeader && <Header />}
 
+      {/* 🚧 TEMPORARY BACKEND CONNECTION STATUS DISPLAY */}
+      <div
+        style={{
+          textAlign: "center",
+          padding: "10px",
+          background: backendStatus.startsWith("✅") ? "#d1e7dd" : "#f8d7da",
+          color: backendStatus.startsWith("✅") ? "#0f5132" : "#842029",
+          fontWeight: "bold",
+        }}
+      >
+        {backendStatus}
+      </div>
+      {/* 🚧 END OF TEMPORARY BACKEND CONNECTION STATUS DISPLAY */}
+
       {!shouldHideHeader && !location.pathname.startsWith("/national-executives") && (
         <div className="text-center py-2 bg-light border-bottom">
           <a
@@ -465,6 +498,7 @@ function App() {
 
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
+
 
           <Route path="/self-placement" element={<LazyUserSelfPlacement />} />
           <Route path="/dashboard" element={<LazyDashboardPage />} />

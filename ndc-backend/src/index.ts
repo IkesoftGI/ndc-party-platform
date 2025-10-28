@@ -1,5 +1,3 @@
-// ndc-backend\src\index.ts
-
 import express from "express";
 import cors from "cors";
 import compression from "compression";
@@ -33,12 +31,13 @@ app.use((req, _res, next) => {
 });
 
 // -----------------------------
-// CORS Configuration
+// CORS Configuration (Final Safe Version)
 // -----------------------------
 const allowedOrigins = [
-  "http://localhost:5183", // ✅ NDC local dev frontend
-  "http://localhost:4175", // ✅ NDC preview port
-  "https://ndc-party-platform.vercel.app", // ✅ NDC production
+  "http://localhost:5183", // local dev
+  "http://localhost:4175", // local preview
+  "https://ikesoft-ndc-party-platform.vercel.app", // ✅ live frontend
+  "https://ndc-party-platform.vercel.app", // optional alias
 ];
 
 app.use(
@@ -46,13 +45,12 @@ app.use(
     origin: (origin, callback) => {
       if (!origin) return callback(null, true);
 
-      // Allow exact allowed origins
-      if (allowedOrigins.includes(origin)) return callback(null, true);
-
-      // Allow Vercel preview URLs for NDC frontend
-      if (/^https:\/\/ndc-party-platform(-[\w-]+)?\.vercel\.app$/.test(origin)) {
+      // ✅ Allow all Vercel preview URLs for this project
+      if (/^https:\/\/ikesoft-ndc-party-platform(-[\w-]+)?\.vercel\.app$/.test(origin)) {
         return callback(null, true);
       }
+
+      if (allowedOrigins.includes(origin)) return callback(null, true);
 
       console.warn("❌ Blocked by CORS:", origin);
       return callback(new Error("Not allowed by CORS"));
@@ -74,6 +72,7 @@ app.use((req, res, next) => {
   express.json({ limit: "10mb" })(req, res, next);
 });
 
+// ✅ Serve static uploads
 app.use("/uploads", express.static(path.join(process.cwd(), "public", "uploads")));
 
 // -----------------------------
