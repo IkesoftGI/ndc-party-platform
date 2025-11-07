@@ -5,9 +5,9 @@ import ndcFlag from "../../assets/ChatGPT-NDC.png";
 import "../../styles/PageWithFlagBackground.css";
 
 interface PageWithFlagBackgroundProps {
-  title?: string;               // optional title
+  title?: string;
   children: React.ReactNode;
-  customBackground?: string;    // optional override for background image
+  customBackground?: string;
 }
 
 const PageWithFlagBackground: React.FC<PageWithFlagBackgroundProps> = ({
@@ -28,18 +28,18 @@ const PageWithFlagBackground: React.FC<PageWithFlagBackgroundProps> = ({
     >
       {title && (
         <header className="flag-header text-center py-5">
-          <h1 className="fw-bold">{title}</h1>
+          <h1 className="fw-bold ndc-header-text">{title}</h1>
         </header>
       )}
 
       <FloatingBanner />
 
-      <main className="page-main container py-4">{children}</main>
+      <main className="page-main container py-4 ndc-main-bg">{children}</main>
 
       <section className="text-center pt-5">
         <img
           src={ndcFlag}
-          alt="NPP Flag Bottom"
+          alt="NDC Flag Bottom"
           className="img-fluid mb-4"
           style={{ maxHeight: "120px" }}
         />

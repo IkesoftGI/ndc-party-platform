@@ -1,8 +1,15 @@
 /* src/styles/PageWithFlagBackground.css */
 
-/* Use relative path from this CSS file to src/assets */
+/* 🌍 NDC color scheme
+   Green:  #006B3F
+   Red:    #E61A23
+   Black:  #000000
+   White:  #FFFFFF
+*/
+
+/* General flag background */
 .page-with-flag {
-  background-image: url("../assets/ChatGPT-NDC.png"); /* ✅ corrected */
+  background-image: url("../assets/ChatGPT-NDC.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center top;
@@ -11,27 +18,41 @@
   flex-direction: column;
 }
 
+/* Main content area below the flag */
 .page-with-flag .main-content {
-  background-color: #f8f9fa; /* Light gray */
+  background-color: #f2f5f1; /* soft NDC-neutral gray-green */
   flex: 1;
-  padding-top: 200px; /* Space for flag header */
+  padding-top: 200px; /* Space for header */
 }
 
+/* ✅ Green dominant page background */
 .page-flag-bg {
-  background-image: url("../assets/ChatGPT-NDC.png"); /* ✅ corrected */
+  background-image: url("../assets/ChatGPT-NDC.png");
   background-size: cover;
   background-position: center;
   min-height: 100vh;
-  color: white;
+  color: #ffffff;
+  background-color: #006b3f; /* NDC green base color */
 }
 
-.flag-header h1 {
+/* Header title overlay */
+.flag-header h1,
+.ndc-header-text {
   font-size: 2.2rem;
   font-weight: bold;
-  background-color: rgba(0, 0, 0, 0.5); /* translucent dark background */
+  background-color: rgba(0, 0, 0, 0.5); /* translucent black backdrop */
   display: inline-block;
   padding: 12px 24px;
   border-radius: 12px;
-  color: white;
+  color: #ffffff;
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+  border-bottom: 4px solid #e61a23; /* subtle NDC red underline */
+}
+
+/* Optional green overlay for main area */
+.ndc-main-bg {
+  background-color: rgba(0, 107, 63, 0.1); /* light green transparency */
+  border-top: 3px solid #006b3f;
+  border-radius: 10px;
+  padding: 1rem;
 }

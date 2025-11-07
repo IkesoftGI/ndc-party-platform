@@ -57,7 +57,7 @@ import NCouncil2016_2020 from "./pages/National/Council/N-Council2016_2020";
 import NCouncil2020_2024 from "./pages/National/Council/N-Council2020_2024";
 import NCouncil2024_2028 from "./pages/National/Council/N-Council2024_2028";
 import PollingStationFormatter from "./tools/PollingStationFormatter";
-import PollingStationsPage from "./pages/Generic/PollingStationsPage";
+import PollingStationsPage from "./pages/Generic/BranchExecutivesPage";
 import CoordinatorsPage from "./pages/Generic/CoordinatorsPage";
 import RegionalEldersPage from "./pages/Generic/RegionalEldersPage";
 import ConstituencyExecutivesPage from "./pages/Generic/ConstituencyExecutivesPage";

@@ -1,8 +1,9 @@
-// src/data/pollingStationExecutives.ts
+// src\data\branchExecutives.ts
+
 import type { User} from '../types/User';
 
 // Example structure: mapping polling station codes to arrays of executives
-export const pollingStationExecutives: Record<string, User[]> = {
+export const branchExecutives: Record<string, User[]> = {
   "C060901": [
     {
       _id: "exec-1",
@@ -12,7 +13,7 @@ export const pollingStationExecutives: Record<string, User[]> = {
       constituency: "Dome-Kwabenya",
       role: {
         scope: "Constituency",
-        unit: "Polling Station Executives",
+        unit: "Branch Executives",
         position: "Chairman",
         isActive: true
       }
@@ -25,7 +26,7 @@ export const pollingStationExecutives: Record<string, User[]> = {
       constituency: "Dome-Kwabenya",
       role: {
         scope: "Constituency",
-        unit: "Polling Station Executives",
+        unit: "Branch Executives",
         position: "Secretary",
         isActive: true
       }
@@ -40,7 +41,7 @@ export const pollingStationExecutives: Record<string, User[]> = {
       constituency: "Dome-Kwabenya",
       role: {
         scope: "Constituency",
-        unit: "Polling Station Executives",
+        unit: "Branch Executives",
         position: "Chairman",
         isActive: true
       }

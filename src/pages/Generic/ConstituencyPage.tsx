@@ -79,11 +79,7 @@ const ConstituencyPage: React.FC<ConstituencyPageProps> = ({ regionParam, consti
         <Link to={`/regions/${region}/constituencies/${constituency}/donate`} className="btn btn-success fw-bold mx-2">
           💰 Support {constituency}
         </Link>
-      </section>
-
-      <section className="text-center pt-5">
-        <img src={umbrellaIcon} alt="Big Elephant" className="img-fluid standing-elephant" />
-      </section>
+      </section>      
     </div>
   );
 };

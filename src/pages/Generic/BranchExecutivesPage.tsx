@@ -1,4 +1,4 @@
-// src/pages/Generic/PollingStationsPage.tsx
+// src\pages\Generic\BranchExecutivesPage.tsx
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
@@ -22,13 +22,16 @@ interface LocalUser extends User {
   };
 }
 // ✅ Fixed hierarchy for polling station executives
-const POLLING_HIERARCHY = [
+const BRANCH_HIERARCHY = [
   "Chairman",
   "Secretary",
   "Treasurer",
   "Organizer",
+  "Communication Officer",
   "Youth Organizer",
   "Women's Organizer",
+  "Executive Member (1)",
+  "Executive Member (2)"
 ];
 
 
@@ -67,7 +70,7 @@ useEffect(() => {
       const pollingExecs = (users as User[])
         .filter(
           (u) =>
-            norm(u.role?.unit) === "polling station executives" &&
+            norm(u.role?.unit) === "branch executives" &&
             norm(u.region) === r &&
             norm(u.constituency) === c
         )
@@ -176,8 +179,8 @@ useEffect(() => {
                           <div className="executives-grid">
                             {[...current]
                               .sort((a, b) => {
-                                const posA = POLLING_HIERARCHY.indexOf(a.role?.position || "");
-                                const posB = POLLING_HIERARCHY.indexOf(b.role?.position || "");
+                                const posA = BRANCH_HIERARCHY.indexOf(a.role?.position || "");
+                                const posB = BRANCH_HIERARCHY.indexOf(b.role?.position || "");
                                 // If any role not found, push it to bottom
                                 return (posA === -1 ? 999 : posA) - (posB === -1 ? 999 : posB);
                               })
@@ -226,8 +229,8 @@ useEffect(() => {
                               <Row className="g-4 justify-content-center">
                                 {[...users]
                                   .sort((a, b) => {
-                                  const posA = POLLING_HIERARCHY.indexOf(a.role?.position || "");
-                                  const posB = POLLING_HIERARCHY.indexOf(b.role?.position || "");
+                                  const posA = BRANCH_HIERARCHY.indexOf(a.role?.position || "");
+                                  const posB = BRANCH_HIERARCHY.indexOf(b.role?.position || "");
                                   return (posA === -1 ? 999 : posA) - (posB === -1 ? 999 : posB);
                                 })
                                 .map((user) => (

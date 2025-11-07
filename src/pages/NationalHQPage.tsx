@@ -72,12 +72,7 @@ const NationalHQPage: React.FC = () => {
 
       {/* Elephant Icon */}
       <section className="text-center pt-5">
-        <img
-          src={umbrellaIcon}
-          alt="Big umbrella "
-          className="img-fluid standing-umbrella "
-        />
-      </section>
+     </section>
     </div>
   );
 };

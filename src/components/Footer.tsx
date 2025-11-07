@@ -14,7 +14,7 @@ export default function Footer() {
           height={40}
           className="mb-2"
         />
-        <h5 className="fw-bold mb-2">New Patriotic Party Platform</h5>
+        <h5 className="fw-bold mb-2">National Democratic Congress Party Platform</h5>
         <p className="mb-1">© 2025 IKESOFT. All rights reserved.</p>
 
         {/* ✅ Electoral Commission Link */}

@@ -157,12 +157,12 @@ const ROLE_OPTIONS: Record<string, string[]> = {
   "National Executives": [
     "National Chairman", "1st Vice Chairman", "2nd Vice Chairman", "3rd Vice Chairman",
     "General Secretary", "1st Deputy General Secretary", "2nd Deputy General Secretary",
-    "National Treasurer", "1st Deputy Treasurer", "2nd Deputy Treasurer",
-    "National Organizer", "Deputy National Organizer",
-    "National Youth Organizer", "Deputy National Youth Organizer",
-    "National Women's Organizer", "Deputy National Women's Organizer",
-    "National Nasara Coordinator", "Deputy National Nasara Coordinator",
-    "Communications Director", "1st Deputy Communications Director", "2nd Deputy Communications Director"
+    "National Communication Officer", "1st Communication Officer", "2nd Communication Officer",
+    "National Organizer", "1st Deputy National Organizer", "2nd Deputy National Organizer",
+    "National Youth Organizer", "1st Deputy National Youth Organizer", "2nd Deputy National Youth Organizer",
+    "National Women's Organizer", "1st Deputy Women's Organizer", "2nd Deputy Women's Organizer",
+    "Zongo Caucus Coordinator",
+    "NEC Member (1)", "NEC Member (2)", "NEC Member (3)", "NEC Member (4)", "NEC Member (5)",
   ],
 
   "National Council of Elders": [  "Council Chairman", "Council Vice Chairman",
@@ -173,12 +173,13 @@ const ROLE_OPTIONS: Record<string, string[]> = {
 
   "Regional Executives": [
     "Regional Chairman", "1st Vice Chairman", "2nd Vice Chairman", "3rd Vice Chairman",
-    "Regional Secretary", "Deputy Regional Secretary",
-    "Regional Treasurer", "Deputy Regional Treasurer",
-    "Regional Organizer", "Deputy Regional Organizer",
-    "Regional Youth Organizer", "Deputy Regional Youth Organizer",
-    "Regional Women's Organizer", "Deputy Regional Women's Organizer",
-    "Regional Nasara Coordinator", "Deputy Regional Nasara Coordinator"    
+    "Regional Secretary", "1st Deputy General Secretary", "2nd Deputy General Secretary",
+    "Regional Communication Officer", "1st Communication Officer", "2nd Communication Officer",
+    "Regional Organizer", "1st Deputy National Organizer", "2nd Deputy Regional Organizer",
+    "Regional Youth Organizer", "1st Deputy National Youth Organizer", "2nd Deputy Regional Youth Organizer",
+    "Regional Women's Organizer", "1st Deputy Women's Organizer", "2nd Deputy Women's Organizer",
+    "Regional Zongo Caucus Coordinator",
+    "Executive Member (1)", "Executive Member (2)", "Executive Member (3)", "Executive Member (4)", "Executive Member (5)"      
   ],
 
   "Regional Council of Elders": ["Council Chairman", "Council Vice Chairman",
@@ -208,9 +209,8 @@ const ROLE_OPTIONS: Record<string, string[]> = {
     "Chairman", "Secretary", "Vice Chair", "Youth Organizer", "Organizer", "Treasurer", "Women's Organizer"
   ],
 
-  "Polling Station Executives": [
-    "Chairman", "Secretary", "Treasurer", "Organizer", "Youth Organizer", "Women's Organizer"
-  ],
+  "Branch Executives": [
+    "Chairman", "Secretary", "Treasurer", "Organizer", "Communication Officer", "Youth Organizer", "Women's Organizer", "executive members (1)", "executive members (2)"  ],
 
   "Member of Parliament": ["Member of Parliament"],
   "District Chief Executive": ["District Chief Executive"],
@@ -226,7 +226,7 @@ const SCOPE_UNITS_MAP: Record<string, string[]> = {
     "Constituency Executives",
     "Constituency Council of Elders",
     "Electoral Area Coordinators",
-    "Polling Station Executives",
+    "Branch Executives",
     "Member of Parliament",
     "Municipal Chief Executive",
     "Metropolitan Chief Executive",
@@ -694,7 +694,7 @@ const availableElectoralAreas = ELECTORAL_AREA_MAP[form.constituency] || [];
               </div>
             )}
 
-            {form.unit === "Polling Station Executives" && (
+            {form.unit === "Branch Executives" && (
   <div className="mb-3">
     <label>Polling Station</label>
     <input
