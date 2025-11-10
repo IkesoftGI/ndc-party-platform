@@ -1,6 +1,5 @@
-// src/components/Header.tsx
 import { Link, useNavigate } from "react-router-dom";
-import ndcFlag from "../assets/NDC.png";   // ✅ Replace this image with NDC umbrella logo (NDC.png)
+import ndcFlag from "../assets/NDC.png"; // ✅ NDC umbrella logo
 import { useAuth } from "../context/AuthContext";
 import type { User } from "../types/User";
 
@@ -14,7 +13,7 @@ export default function Header() {
     navigate("/login");
   };
 
-  // ✅ User constituency URL for Home button
+  // ✅ User constituency URL
   const storedUserStr = localStorage.getItem("lastUser");
   const storedUser = storedUserStr ? (JSON.parse(storedUserStr) as User) : null;
   const userConstituencyUrl = storedUser
@@ -41,7 +40,7 @@ export default function Header() {
         }}
       >
         <img
-          src={ndcFlag }
+          src={ndcFlag}
           alt="NDC Party Platform Logo"
           style={{
             width: 46,
@@ -64,7 +63,7 @@ export default function Header() {
         </h1>
       </div>
 
-      {/* Navigation links */}
+      {/* ✅ Navigation links */}
       <nav
         className="nav-scroller"
         style={{
@@ -104,7 +103,17 @@ export default function Header() {
           Elders
         </Link>
 
-        {isAuthenticated ? (
+        {/* ✅ Replaced Login → Executive Records */}
+        <Link
+          className="navlink text-warning fw-bold"
+          to="/all-executive-records-ndc"
+          style={{ fontSize: "0.9rem" }}
+        >
+          📊 Executive Records
+        </Link>
+
+        {/* ✅ Logout stays at the end */}
+        {isAuthenticated && (
           <button
             className="navbtn"
             onClick={handleLogout}
@@ -120,12 +129,9 @@ export default function Header() {
           >
             Logout
           </button>
-        ) : (
-          <Link className="navlink" to="/login" style={{ fontSize: "0.9rem" }}>
-            Login
-          </Link>
         )}
 
+        {/* ✅ Admin-only links */}
         {user?.role === "executive" && (
           <>
             <Link

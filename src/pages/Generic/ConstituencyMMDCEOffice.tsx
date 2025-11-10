@@ -7,7 +7,7 @@ import PageWithFlagBackground from "@components/Layout/PageWithFlagBackground";
 import ConstituencyNavbar from "@components/Navbars/ConstituencyNavbar";
 import type { User } from "../../types/User";
 import { API_BASE_URL } from "@api/config";
-import { resolvePhotoUrl } from "../../utils/photo"; // ✅ shared resolver
+import { resolvePhotoUrl } from "../../utils/photo";
 
 // ✅ Normalize helper
 const norm = (s?: string) =>
@@ -17,13 +17,13 @@ const norm = (s?: string) =>
     .trim()
     .replace(/[\s_]+/g, "-");
 
-// ✅ Detect MMDCE units
+// ✅ Detect MMDCE roles
 const UNIT_KEYWORDS = [
   "mmdce",
   "mce",
+  "dce",
   "district-chief-executive",
   "municipal-chief-executive",
-  "dce",
 ];
 const isMMDCEUnit = (unit?: string) => {
   const u = norm(unit);
@@ -34,16 +34,17 @@ const isMMDCEUnit = (unit?: string) => {
 const pickTermStart = (u: User) => u.role?.termStartDate ?? u.role?.termStart ?? "";
 const pickTermEnd = (u: User) => u.role?.termEndDate ?? u.role?.termEnd ?? "";
 
-// ✅ Compute active status
+// ✅ Active computation
 const computeIsActive = (u: User) => {
-  const explicitTrue =
+  const activeExplicit =
     u.role?.isActive === true ||
     String(u.role?.isActive ?? "").toLowerCase() === "true";
-  const ended = !!pickTermEnd(u) && new Date(pickTermEnd(u)).getTime() < Date.now();
-  return explicitTrue && !ended;
+  const termEnded =
+    !!pickTermEnd(u) && new Date(pickTermEnd(u)).getTime() < Date.now();
+  return activeExplicit && !termEnded;
 };
 
-// ✅ Normalize role fields
+// ✅ Normalize role
 const withSafeRole = (u: User): User => ({
   ...u,
   role: {
@@ -65,13 +66,12 @@ export default function ConstituencyMMDCEPage() {
   const [history, setHistory] = useState<User[]>([]);
   const navigate = useNavigate();
 
-  // ✅ Fetch MMDCEs with cache-first optimization
+  // ✅ Fetch MMDCEs (cache-first)
   useEffect(() => {
-    const fetchMMDCEs = async () => {
+    async function fetchMMDCEs() {
       const CACHE_KEY = `mmdces-${region}-${constituency}`;
       const cached = localStorage.getItem(CACHE_KEY);
 
-      // 💾 Instantly show cached data if available
       if (cached) {
         console.log(`💾 Showing cached MMDCEs for ${constituency}`);
         const parsed = JSON.parse(cached);
@@ -96,7 +96,7 @@ export default function ConstituencyMMDCEPage() {
           .filter((u) => norm(u.region) === r && norm(u.constituency) === c)
           .map(withSafeRole);
 
-        // ✅ Sort: current first, then by most recent term
+        // ✅ Sort: active first, then recent
         matches.sort((a, b) => {
           const aAct = a.role?.isActive ? 1 : 0;
           const bAct = b.role?.isActive ? 1 : 0;
@@ -104,24 +104,16 @@ export default function ConstituencyMMDCEPage() {
 
           const aEnd = pickTermEnd(a) ? new Date(pickTermEnd(a)).getTime() : -Infinity;
           const bEnd = pickTermEnd(b) ? new Date(pickTermEnd(b)).getTime() : -Infinity;
-          if (bEnd !== aEnd) return bEnd - aEnd;
-
-          const aStart = pickTermStart(a)
-            ? new Date(pickTermStart(a)).getTime()
-            : -Infinity;
-          const bStart = pickTermStart(b)
-            ? new Date(pickTermStart(b)).getTime()
-            : -Infinity;
-          return bStart - aStart;
+          return bEnd - aEnd;
         });
 
-        const currentItem = matches[0] || null;
-        const pastItems = matches.slice(1);
+        const currentItem = matches.find((u) => u.role?.isActive) || null;
+        const pastItems = matches.filter((u) => !u.role?.isActive);
 
         setCurrent(currentItem);
         setHistory(pastItems);
 
-        // ✅ Cache results for faster reloads
+        // ✅ Cache results
         localStorage.setItem(
           CACHE_KEY,
           JSON.stringify({ current: currentItem, history: pastItems })
@@ -132,12 +124,13 @@ export default function ConstituencyMMDCEPage() {
         setCurrent(null);
         setHistory([]);
       }
-    };
+    }
 
     fetchMMDCEs();
   }, [region, constituency]);
 
   const titleC = constituency || "";
+  const totalCount = (current ? 1 : 0) + history.length;
 
   return (
     <>
@@ -151,14 +144,28 @@ export default function ConstituencyMMDCEPage() {
               borderRadius: "12px",
             }}
           >
-            {/* 🔙 Back button */}
+            {/* 🔙 Back Button */}
             <div className="mb-4 text-start">
               <Button
                 variant="secondary"
-                onClick={() => navigate(`/regions/${region}/constituencies/${constituency}`)}
+                onClick={() =>
+                  navigate(`/regions/${region}/constituencies/${constituency}`)
+                }
               >
                 ← Back to Constituency
               </Button>
+            </div>
+
+            {/* 🔢 Summary Counter */}
+            <div
+              className="mb-4 py-2 text-center fw-bold rounded"
+              style={{
+                background: "linear-gradient(90deg, #006b3f, #d71a28)",
+                color: "white",
+              }}
+            >
+              🌍 Total: {totalCount} | ✅ Current: {current ? 1 : 0} | 🕰 Past:{" "}
+              {history.length}
             </div>
 
             {/* 🌟 Current M/DCE */}
@@ -180,7 +187,8 @@ export default function ConstituencyMMDCEPage() {
                     alt={current.name || "MMDCE"}
                     className="executive-image"
                     onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src = "/No Image Available.png";
+                      (e.currentTarget as HTMLImageElement).src =
+                        "/No Image Available.png";
                     }}
                   />
                   <div className="executive-name">{current.name || "Unnamed"}</div>
@@ -202,7 +210,9 @@ export default function ConstituencyMMDCEPage() {
                   )}
                   <div
                     className={`executive-status ${
-                      current.role?.isActive ? "text-success fw-bold" : "text-muted fw-bold"
+                      current.role?.isActive
+                        ? "text-success fw-bold"
+                        : "text-muted fw-bold"
                     }`}
                   >
                     {current.role?.isActive ? "Current" : "Past"}
@@ -223,13 +233,14 @@ export default function ConstituencyMMDCEPage() {
                 <Row className="g-4">
                   {history.map((u) => (
                     <Col xs={12} sm={6} md={4} key={u._id}>
-                      <div className="executive-card h-100">
+                      <div className="executive-card h-100" style={{ background: "#f1f1f1" }}>
                         <img
                           src={resolvePhotoUrl(u.photo, API_BASE_URL)}
                           alt={u.name || "MMDCE"}
                           className="executive-image"
                           onError={(e) => {
-                            (e.currentTarget as HTMLImageElement).src = "/No Image Available.png";
+                            (e.currentTarget as HTMLImageElement).src =
+                              "/No Image Available.png";
                           }}
                         />
                         <div className="executive-name">{u.name || "Unnamed"}</div>

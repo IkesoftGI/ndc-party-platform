@@ -4,11 +4,11 @@ import { useParams } from "react-router-dom";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import PageWithFlagBackground from "@components/Layout/PageWithFlagBackground";
 import RegionalNavbar from "@components/Navbars/RegionalNavbar";
-import type { User, Role } from "@api/users"; // ✅ unified import
+import type { User, Role } from "@api/users";
 import "@pages/Presidents.css";
 import { API_BASE_URL } from "@api/config";
 import { resolvePhotoUrl } from "../../utils/photo";
-import { getRegionalElders } from "@data/executives/executiveController"; // ✅ centralized fetch
+import { getRegionalElders } from "@data/executives/executiveController";
 
 // ✅ Local extended user type
 interface LocalUser extends User {
@@ -33,8 +33,7 @@ const ELDERS_HIERARCHY = [
   "Council Member 6",
 ];
 
-
-// ✅ Official NPP term ranges
+// ✅ Official term ranges
 const TERM_PERIODS = [
   { label: "2024–2028", start: "2024-01-01", end: "2028-12-31" },
   { label: "2020–2024", start: "2020-01-01", end: "2023-12-31" },
@@ -49,64 +48,63 @@ export default function RegionalEldersPage() {
   const [openTerm, setOpenTerm] = useState<Record<string, boolean>>({});
   const [showTop, setShowTop] = useState(false);
 
-  // ✅ Fetch elders via centralized controller (with cache)
-useEffect(() => {
-  async function loadElders() {
-    const CACHE_KEY = `regional-elders-${region}`;
-    const cached = localStorage.getItem(CACHE_KEY);
+  // ✅ Fetch elders via centralized controller
+  useEffect(() => {
+    async function loadElders() {
+      const CACHE_KEY = `regional-elders-${region}`;
+      const cached = localStorage.getItem(CACHE_KEY);
 
-    // 💾 Show cached elders instantly
-    if (cached) {
-      console.log(`💾 Showing cached elders for ${region}`);
-      setGroupedTerms(JSON.parse(cached));
-    }
+      // 💾 Show cached instantly
+      if (cached) {
+        console.log(`💾 Showing cached elders for ${region}`);
+        setGroupedTerms(JSON.parse(cached));
+      }
 
-    try {
-      console.log(`🌐 Fetching fresh elders for ${region}...`);
-      const elders = await getRegionalElders(region || "");
-      if (!Array.isArray(elders)) return;
+      try {
+        console.log(`🌐 Fetching fresh elders for ${region}...`);
+        const elders = await getRegionalElders(region || "");
+        if (!Array.isArray(elders)) return;
 
-      const mapped = (elders as User[]).map((u) => {
-        const role = u.role || {};
-        const termStart = role.termStartDate || role.termStart || "";
-        const termEnd = role.termEndDate || role.termEnd || "";
-        const hasEnded = termEnd && new Date(termEnd).getTime() < Date.now();
-        return {
-          ...u,
-          role: { ...role, termStart, termEnd, isActive: !hasEnded },
-        } as LocalUser;
-      });
-
-      // ✅ Group by term period
-      const grouped: Record<string, LocalUser[]> = {};
-      TERM_PERIODS.forEach((term) => {
-        grouped[term.label] = mapped.filter((u) => {
-          const start = u.role?.termStart;
-          if (!start) return false;
-          const userStart = new Date(start).getTime();
-          const termStart = new Date(term.start).getTime();
-          const termEnd = new Date(term.end).getTime();
-          return userStart >= termStart && userStart <= termEnd;
+        const mapped = elders.map((u) => {
+          const role = u.role || {};
+          const termStart = role.termStartDate || role.termStart || "";
+          const termEnd = role.termEndDate || role.termEnd || "";
+          const hasEnded = termEnd && new Date(termEnd).getTime() < Date.now();
+          return {
+            ...u,
+            role: { ...role, termStart, termEnd, isActive: !hasEnded },
+          } as LocalUser;
         });
-      });
 
-      // ✅ Remove empty groups
-      Object.keys(grouped).forEach((key) => {
-        if (grouped[key].length === 0) delete grouped[key];
-      });
+        // ✅ Group by term period
+        const grouped: Record<string, LocalUser[]> = {};
+        TERM_PERIODS.forEach((term) => {
+          grouped[term.label] = mapped.filter((u) => {
+            const start = u.role?.termStart;
+            if (!start) return false;
+            const userStart = new Date(start).getTime();
+            const termStart = new Date(term.start).getTime();
+            const termEnd = new Date(term.end).getTime();
+            return userStart >= termStart && userStart <= termEnd;
+          });
+        });
 
-      // ✅ Update state + cache
-      setGroupedTerms(grouped);
-      localStorage.setItem(CACHE_KEY, JSON.stringify(grouped));
-      console.log(`✅ Updated elders cache for ${region}`);
-    } catch (err) {
-      console.error("❌ Failed to fetch regional elders:", err);
+        // ✅ Remove empty groups
+        Object.keys(grouped).forEach((key) => {
+          if (grouped[key].length === 0) delete grouped[key];
+        });
+
+        // ✅ Save to state + cache
+        setGroupedTerms(grouped);
+        localStorage.setItem(CACHE_KEY, JSON.stringify(grouped));
+        console.log(`✅ Updated elders cache for ${region}`);
+      } catch (err) {
+        console.error("❌ Failed to fetch regional elders:", err);
+      }
     }
-  }
 
-  loadElders();
-}, [region]);
-
+    loadElders();
+  }, [region]);
 
   // ✅ Identify current term dynamically
   const currentYear = new Date().getFullYear();
@@ -115,6 +113,13 @@ useEffect(() => {
       currentYear >= parseInt(t.start.split("-")[0]) &&
       currentYear <= parseInt(t.end.split("-")[0])
   );
+
+  // ✅ Scroll listener
+  useEffect(() => {
+    const onScroll = () => setShowTop(window.scrollY > 300);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <>
@@ -130,13 +135,15 @@ useEffect(() => {
               if (elders.length === 0) return null;
               const isCurrent = term === latestTerm?.label;
 
-              // ✅ Sort elders by defined hierarchy instead of alphabetical order
               const sortedElders = [...elders].sort((a, b) => {
                 const posA = ELDERS_HIERARCHY.indexOf(a.role?.position || "");
                 const posB = ELDERS_HIERARCHY.indexOf(b.role?.position || "");
                 return (posA === -1 ? 999 : posA) - (posB === -1 ? 999 : posB);
               });
 
+              const total = elders.length;
+              const currentCount = elders.filter((e) => e.role?.isActive).length;
+              const pastCount = total - currentCount;
 
               return (
                 <Card key={term} className="mb-4 shadow-sm">
@@ -157,6 +164,17 @@ useEffect(() => {
 
                   {openTerm[term] && (
                     <Card.Body>
+                      {/* ✅ Term-Level Counter */}
+                      <div
+                        className="mb-3 py-2 text-center fw-bold rounded"
+                        style={{
+                          background: "linear-gradient(90deg, #006b3f, #d71a28)",
+                          color: "white",
+                        }}
+                      >
+                        🌍 Total: {total} | ✅ Current: {currentCount} | 🕰 Past: {pastCount}
+                      </div>
+
                       <Row className="g-4 justify-content-center">
                         {sortedElders.map((user) => (
                           <Col xs={12} sm={6} md={4} key={user._id}>
@@ -167,7 +185,7 @@ useEffect(() => {
                               }}
                             >
                               <img
-                                src={resolvePhotoUrl(user.photo, API_BASE_URL)} // ✅ unified resolver
+                                src={resolvePhotoUrl(user.photo, API_BASE_URL)}
                                 alt={user.name || "Elder"}
                                 className="executive-image"
                                 style={!isCurrent ? { filter: "grayscale(100%)" } : {}}
@@ -209,7 +227,7 @@ useEffect(() => {
           )}
         </Container>
 
-        {/* ✅ Back to Top Button */}
+        {/* ⬆ Back to Top Button */}
         {showTop && (
           <Button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}

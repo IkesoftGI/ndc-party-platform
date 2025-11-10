@@ -27,6 +27,10 @@
       "@types/*": ["src/types/*"]
     },
 
+    // ✅ Add this line
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+
+
     // ✅ Tell TS to load Vite + PWA module types
     "types": ["vite/client"]
   },

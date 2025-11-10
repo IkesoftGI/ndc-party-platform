@@ -1,5 +1,3 @@
-// src\components\Navbars\ConstituencyNavbar.tsx
-
 import { NavLink } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
 
@@ -45,17 +43,22 @@ export default function ConstituencyNavbar({
               Council of Elders
             </NavLink>
 
-            <NavLink
-              to={`${basePath}/c-dinators`}
-              className="nav-link"
-            >
+            <NavLink to={`${basePath}/c-dinators`} className="nav-link">
               Electoral Area Coordinators
-            </NavLink>            
+            </NavLink>
 
             <NavLink to={`${basePath}/polling-stations`} className="nav-link">
-              Polling Stations
-            </NavLink> 
-              
+              Branch Executives
+            </NavLink>
+
+            {/* ✅ NEW Executive Records link */}
+            <NavLink
+              to={`${basePath}/executive-records`}
+              className="nav-link text-success fw-bold"
+            >
+              Executive Records
+            </NavLink>
+
             <NavLink to={`${basePath}/blog`} className="nav-link">
               Blog
             </NavLink>

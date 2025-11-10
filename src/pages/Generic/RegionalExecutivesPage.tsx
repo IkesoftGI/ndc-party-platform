@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import PageWithFlagBackground from "@components/Layout/PageWithFlagBackground";
 import RegionalNavbar from "@components/Navbars/RegionalNavbar";
-import type { User, Role } from "@api/users"; // ✅ unified import
+import type { User, Role } from "@api/users";
 import "@pages/Presidents.css";
 import { API_BASE_URL } from "@api/config";
 import { resolvePhotoUrl } from "../../utils/photo";
@@ -28,7 +28,7 @@ const TERM_PERIODS = [
   { label: "2008–2012", start: "2008-01-01", end: "2011-12-31" },
 ];
 
-// ✅ Executive order
+// ✅ Executive hierarchy
 const EXECUTIVE_HIERARCHY = [
   "Regional Chairman",
   "1st Vice Chairman",
@@ -54,68 +54,75 @@ export default function RegionalExecutivesPage() {
   const [openTerm, setOpenTerm] = useState<Record<string, boolean>>({});
   const [showTop, setShowTop] = useState(false);
 
+  // ✅ Fetch regional executives
   useEffect(() => {
-  async function loadExecutives() {
-    const CACHE_KEY = `regional-executives-${region}`;
-    const cached = localStorage.getItem(CACHE_KEY);
+    async function loadExecutives() {
+      const CACHE_KEY = `regional-executives-${region}`;
+      const cached = localStorage.getItem(CACHE_KEY);
 
-    // 💾 Show cached executives instantly
-    if (cached) {
-      console.log(`💾 Showing cached executives for ${region}`);
-      setGroupedTerms(JSON.parse(cached));
-    }
+      if (cached) {
+        console.log(`💾 Showing cached executives for ${region}`);
+        setGroupedTerms(JSON.parse(cached));
+      }
 
-    try {
-      console.log(`🌐 Fetching fresh executives for ${region}...`);
-      const executives = await getRegionalExecutives(region || "");
-      if (!Array.isArray(executives)) return;
+      try {
+        console.log(`🌐 Fetching fresh executives for ${region}...`);
+        const executives = await getRegionalExecutives(region || "");
+        if (!Array.isArray(executives)) return;
 
-      const mapped = (executives as User[]).map((u) => {
-        const role = u.role || {};
-        const termStart = role.termStartDate || role.termStart || "";
-        const termEnd = role.termEndDate || role.termEnd || "";
-        const hasEnded = termEnd && new Date(termEnd).getTime() < Date.now();
-        return {
-          ...u,
-          role: { ...role, termStart, termEnd, isActive: !hasEnded },
-        } as LocalUser;
-      });
-
-      // ✅ Group by term
-      const grouped: Record<string, LocalUser[]> = {};
-      TERM_PERIODS.forEach((term) => {
-        grouped[term.label] = mapped.filter((u) => {
-          const start = u.role?.termStart;
-          if (!start) return false;
-          const userStart = new Date(start).getTime();
-          const termStart = new Date(term.start).getTime();
-          const termEnd = new Date(term.end).getTime();
-          return userStart >= termStart && userStart <= termEnd;
+        const mapped = executives.map((u) => {
+          const role = u.role || {};
+          const termStart = role.termStartDate || role.termStart || "";
+          const termEnd = role.termEndDate || role.termEnd || "";
+          const hasEnded = termEnd && new Date(termEnd).getTime() < Date.now();
+          return {
+            ...u,
+            role: { ...role, termStart, termEnd, isActive: !hasEnded },
+          } as LocalUser;
         });
-      });
 
-      Object.keys(grouped).forEach((key) => {
-        if (grouped[key].length === 0) delete grouped[key];
-      });
+        // ✅ Group by term
+        const grouped: Record<string, LocalUser[]> = {};
+        TERM_PERIODS.forEach((term) => {
+          grouped[term.label] = mapped.filter((u) => {
+            const start = u.role?.termStart;
+            if (!start) return false;
+            const userStart = new Date(start).getTime();
+            const termStart = new Date(term.start).getTime();
+            const termEnd = new Date(term.end).getTime();
+            return userStart >= termStart && userStart <= termEnd;
+          });
+        });
 
-      // ✅ Update state and cache
-      setGroupedTerms(grouped);
-      localStorage.setItem(CACHE_KEY, JSON.stringify(grouped));
-      console.log(`✅ Updated executives cache for ${region}`);
-    } catch (err) {
-      console.error("❌ Failed to fetch executives:", err);
+        Object.keys(grouped).forEach((key) => {
+          if (grouped[key].length === 0) delete grouped[key];
+        });
+
+        setGroupedTerms(grouped);
+        localStorage.setItem(CACHE_KEY, JSON.stringify(grouped));
+        console.log(`✅ Updated executives cache for ${region}`);
+      } catch (err) {
+        console.error("❌ Failed to fetch executives:", err);
+      }
     }
-  }
 
-  loadExecutives();
-}, [region]);
+    loadExecutives();
+  }, [region]);
 
+  // ✅ Identify current term dynamically
   const currentYear = new Date().getFullYear();
   const latestTerm = TERM_PERIODS.find(
     (t) =>
       currentYear >= parseInt(t.start.split("-")[0]) &&
       currentYear <= parseInt(t.end.split("-")[0])
   );
+
+  // ✅ Scroll listener
+  useEffect(() => {
+    const onScroll = () => setShowTop(window.scrollY > 300);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <>
@@ -131,11 +138,15 @@ export default function RegionalExecutivesPage() {
               if (execs.length === 0) return null;
               const isCurrent = term === latestTerm?.label;
 
-              const sortedExecs = [...execs].sort(
-                (a, b) =>
-                  EXECUTIVE_HIERARCHY.indexOf(a.role?.position || "") -
-                  EXECUTIVE_HIERARCHY.indexOf(b.role?.position || "")
-              );
+              const sortedExecs = [...execs].sort((a, b) => {
+                const posA = EXECUTIVE_HIERARCHY.indexOf(a.role?.position || "");
+                const posB = EXECUTIVE_HIERARCHY.indexOf(b.role?.position || "");
+                return (posA === -1 ? 999 : posA) - (posB === -1 ? 999 : posB);
+              });
+
+              const total = execs.length;
+              const currentCount = execs.filter((e) => e.role?.isActive).length;
+              const pastCount = total - currentCount;
 
               return (
                 <Card key={term} className="mb-4 shadow-sm">
@@ -156,9 +167,20 @@ export default function RegionalExecutivesPage() {
 
                   {openTerm[term] && (
                     <Card.Body>
+                      {/* ✅ Term-Level Counter */}
+                      <div
+                        className="mb-3 py-2 text-center fw-bold rounded"
+                        style={{
+                          background: "linear-gradient(90deg, #006b3f, #d71a28)",
+                          color: "white",
+                        }}
+                      >
+                        🌍 Total: {total} | ✅ Current: {currentCount} | 🕰 Past: {pastCount}
+                      </div>
+
                       <Row className="g-4 justify-content-center">
                         {sortedExecs.map((user) => (
-                          <Col xs={6} md={3} key={user._id}>
+                          <Col xs={12} sm={6} md={4} key={user._id}>
                             <div
                               className="executive-card h-100"
                               style={{
@@ -208,13 +230,14 @@ export default function RegionalExecutivesPage() {
           )}
         </Container>
 
+        {/* ⬆ Back to Top */}
         {showTop && (
           <Button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             style={{
               position: "fixed",
-              bottom: "20px",
-              right: "20px",
+              bottom: 20,
+              right: 20,
               borderRadius: "50%",
               padding: "10px 15px",
               zIndex: 1000,

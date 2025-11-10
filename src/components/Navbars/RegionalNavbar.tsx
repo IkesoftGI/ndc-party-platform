@@ -14,6 +14,14 @@ export default function RegionalNavbar({ region }: RegionalNavbarProps) {
     { name: "Regional Minister's Office", path: `${basePath}/minister` },
     { name: "Executives", path: `${basePath}/executives` },
     { name: "Council of Elders", path: `${basePath}/council-of-elders` },
+
+    // ✅ NEW Executive Records link
+    {
+      name: "Executive Records",
+      path: `${basePath}/executive-records`,
+      highlight: true,
+    },
+
     { name: "Projects", path: `${basePath}/projects` },
     { name: "Blog", path: `${basePath}/blog` },
     { name: "Donate", path: `${basePath}/donate` },
@@ -35,7 +43,9 @@ export default function RegionalNavbar({ region }: RegionalNavbarProps) {
                 as={Link}
                 to={link.path}
                 active={location.pathname.startsWith(link.path)}
-                className="fw-semibold"
+                className={`fw-semibold ${
+                  link.highlight ? "text-success fw-bold" : ""
+                }`}
               >
                 {link.name}
               </Nav.Link>

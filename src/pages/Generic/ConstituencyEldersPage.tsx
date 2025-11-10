@@ -4,12 +4,12 @@ import { useParams } from "react-router-dom";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import PageWithFlagBackground from "@components/Layout/PageWithFlagBackground";
 import ConstituencyNavbar from "@components/Navbars/ConstituencyNavbar";
-import type { User, Role } from "@api/users"; // ✅ unified type source
+import type { User, Role } from "@api/users";
 import "@pages/Presidents.css";
 import { API_BASE_URL } from "@api/config";
 import { resolvePhotoUrl } from "../../utils/photo";
 
-// ✅ Local extended type
+// ✅ Local type extension
 interface LocalUser extends User {
   role: Role & {
     isActive?: boolean;
@@ -27,7 +27,7 @@ const TERM_PERIODS = [
   { label: "2008–2012", start: "2008-01-01", end: "2011-12-31" },
 ];
 
-// ✅ Fixed hierarchy for Constituency Council of Elders
+// ✅ Fixed hierarchy for Council of Elders
 const ELDERS_HIERARCHY = [
   "Council Chairman",
   "Council Vice Chairman",
@@ -41,7 +41,6 @@ const ELDERS_HIERARCHY = [
   "Council Member 6",
 ];
 
-// ✅ Normalizer
 const norm = (s?: string) => (s || "").toLowerCase().replace(/-/g, " ").trim();
 
 export default function ConstituencyEldersPage() {
@@ -50,90 +49,85 @@ export default function ConstituencyEldersPage() {
   const [openTerm, setOpenTerm] = useState<Record<string, boolean>>({});
   const [showTop, setShowTop] = useState(false);
 
-  // ✅ Fetch elders with cache-first optimization
-useEffect(() => {
-  async function fetchElders() {
-    const CACHE_KEY = `constituency-elders-${region}-${constituency}`;
-    const cached = localStorage.getItem(CACHE_KEY);
+  // ✅ Fetch elders (cache-first)
+  useEffect(() => {
+    async function fetchElders() {
+      const CACHE_KEY = `constituency-elders-${region}-${constituency}`;
+      const cached = localStorage.getItem(CACHE_KEY);
 
-    // 💾 Instantly show cached data if available
-    if (cached) {
-      console.log(`💾 Showing cached constituency elders for ${constituency}`);
-      const parsed = JSON.parse(cached);
-      setGroupedTerms(parsed.grouped || {});
-    }
+      if (cached) {
+        console.log(`💾 Showing cached elders for ${constituency}`);
+        setGroupedTerms(JSON.parse(cached).grouped || {});
+      }
 
-    try {
-      console.log(`🌐 Fetching fresh constituency elders for ${constituency}...`);
-      const res = await fetch(`${API_BASE_URL}/api/users`);
-      const json = await res.json();
-      const data: User[] = Array.isArray(json?.data)
-        ? json.data
-        : Array.isArray(json)
-        ? json
-        : [];
+      try {
+        console.log(`🌐 Fetching elders for ${constituency}...`);
+        const res = await fetch(`${API_BASE_URL}/api/users`);
+        const json = await res.json();
+        const data: User[] = Array.isArray(json?.data)
+          ? json.data
+          : Array.isArray(json)
+          ? json
+          : [];
 
-      const r = norm(region);
-      const c = norm(constituency);
+        const r = norm(region);
+        const c = norm(constituency);
 
-      const filtered = data
-        .filter(
-          (u) =>
-            norm(u.role?.unit) === "constituency council of elders" &&
-            norm(u.region) === r &&
-            norm(u.constituency) === c
-        )
-        .map((u) => {
-          const role = u.role || {};
-          const termStart = role.termStartDate || role.termStart || "";
-          const termEnd = role.termEndDate || role.termEnd || "";
-          const hasEnded = termEnd && new Date(termEnd).getTime() < Date.now();
-          return {
-            ...u,
-            role: { ...role, termStart, termEnd, isActive: !hasEnded },
-          } as LocalUser;
+        const filtered = data
+          .filter(
+            (u) =>
+              norm(u.role?.unit) === "constituency council of elders" &&
+              norm(u.region) === r &&
+              norm(u.constituency) === c
+          )
+          .map((u) => {
+            const role = u.role || {};
+            const termStart = role.termStartDate || role.termStart || "";
+            const termEnd = role.termEndDate || role.termEnd || "";
+            const hasEnded = termEnd && new Date(termEnd).getTime() < Date.now();
+            return {
+              ...u,
+              role: { ...role, termStart, termEnd, isActive: !hasEnded },
+            } as LocalUser;
+          });
+
+        // ✅ Group by term range
+        const grouped: Record<string, LocalUser[]> = {};
+        TERM_PERIODS.forEach((term) => {
+          grouped[term.label] = filtered.filter((u) => {
+            const start = u.role?.termStart;
+            if (!start) return false;
+            const userStart = new Date(start).getTime();
+            const termStart = new Date(term.start).getTime();
+            const termEnd = new Date(term.end).getTime();
+            return userStart >= termStart && userStart <= termEnd;
+          });
         });
 
-      // ✅ Group by term range
-      const grouped: Record<string, LocalUser[]> = {};
-      TERM_PERIODS.forEach((term) => {
-        grouped[term.label] = filtered.filter((u) => {
-          const start = u.role?.termStart;
-          if (!start) return false;
-          const userStart = new Date(start).getTime();
-          const termStart = new Date(term.start).getTime();
-          const termEnd = new Date(term.end).getTime();
-          return userStart >= termStart && userStart <= termEnd;
+        // ✅ Remove empty term groups
+        Object.keys(grouped).forEach((k) => {
+          if (grouped[k].length === 0) delete grouped[k];
         });
-      });
 
-      // ✅ Remove empty term groups
-      Object.keys(grouped).forEach((k) => {
-        if (grouped[k].length === 0) delete grouped[k];
-      });
-
-      setGroupedTerms(grouped);
-
-      // ✅ Cache results for faster reloads
-      localStorage.setItem(CACHE_KEY, JSON.stringify({ grouped }));
-      console.log(`✅ Updated constituency elders cache for ${constituency}`);
-    } catch (err) {
-      console.error("❌ Failed to fetch elders:", err);
+        setGroupedTerms(grouped);
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ grouped }));
+        console.log(`✅ Updated elders cache for ${constituency}`);
+      } catch (err) {
+        console.error("❌ Failed to fetch elders:", err);
+      }
     }
-  }
 
-  fetchElders();
-}, [region, constituency]);
+    fetchElders();
+  }, [region, constituency]);
 
-// ✅ Back-to-top button visibility
-useEffect(() => {
-  const onScroll = () => setShowTop(window.scrollY > 300);
-  window.addEventListener("scroll", onScroll);
-  return () => window.removeEventListener("scroll", onScroll);
-}, []);
+  // ✅ Show “Back to Top” after scroll
+  useEffect(() => {
+    const onScroll = () => setShowTop(window.scrollY > 300);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-
-  // ✅ Determine current term dynamically
+  // ✅ Determine current term
   const currentYear = new Date().getFullYear();
   const latestTerm = TERM_PERIODS.find(
     (t) =>
@@ -152,26 +146,26 @@ useEffect(() => {
             Object.entries(groupedTerms).map(([term, elders]) => {
               if (elders.length === 0) return null;
               const isCurrent = term === latestTerm?.label;
-              // ✅ Sort elders by official hierarchy
+
+              // ✅ Counter system
+              const total = elders.length;
+              const currentCount = elders.filter((e) => e.role?.isActive).length;
+              const pastCount = total - currentCount;
+
+              // ✅ Sort elders
               const sortedElders = [...elders].sort((a, b) => {
                 const posA = ELDERS_HIERARCHY.indexOf(a.role?.position || "");
                 const posB = ELDERS_HIERARCHY.indexOf(b.role?.position || "");
-                // Unknown positions go to the bottom
                 return (posA === -1 ? 999 : posA) - (posB === -1 ? 999 : posB);
               });
 
               return (
                 <Card key={term} className="mb-4 shadow-sm">
                   <Card.Header
-                    className={`fw-bold text-white ${
-                      isCurrent ? "bg-success" : "bg-primary"
-                    }`}
+                    className={`fw-bold text-white ${isCurrent ? "bg-success" : "bg-primary"}`}
                     style={{ cursor: "pointer" }}
                     onClick={() =>
-                      setOpenTerm((prev) => ({
-                        ...prev,
-                        [term]: !prev[term],
-                      }))
+                      setOpenTerm((prev) => ({ ...prev, [term]: !prev[term] }))
                     }
                   >
                     {isCurrent ? "🌟 Current Term" : "🕰"} {term}
@@ -179,6 +173,17 @@ useEffect(() => {
 
                   {openTerm[term] && (
                     <Card.Body>
+                      {/* 🔴 Counter Section */}
+                      <div
+                        className="mb-3 py-2 text-center fw-bold rounded"
+                        style={{
+                          background: "linear-gradient(90deg, #006b3f, #d71a28)",
+                          color: "white",
+                        }}
+                      >
+                        🌍 Total: {total} | ✅ Current: {currentCount} | 🕰 Past: {pastCount}
+                      </div>
+
                       <Row className="g-4 justify-content-center">
                         {sortedElders.map((elder) => (
                           <Col xs={12} sm={6} md={4} key={elder._id}>
@@ -212,9 +217,7 @@ useEffect(() => {
                               )}
                               <div
                                 className={`executive-status ${
-                                  isCurrent
-                                    ? "text-success fw-bold"
-                                    : "text-muted fw-bold"
+                                  isCurrent ? "text-success fw-bold" : "text-muted fw-bold"
                                 }`}
                               >
                                 {isCurrent ? "Current" : "Past"}
@@ -231,14 +234,14 @@ useEffect(() => {
           )}
         </Container>
 
-        {/* ⬆ Back to Top Button */}
+        {/* ⬆ Back to Top */}
         {showTop && (
           <Button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             style={{
               position: "fixed",
-              bottom: "20px",
-              right: "20px",
+              bottom: 20,
+              right: 20,
               borderRadius: "50%",
               padding: "10px 15px",
               zIndex: 1000,

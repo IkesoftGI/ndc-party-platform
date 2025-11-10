@@ -1,7 +1,7 @@
 // src/components/Navbars/Navbar.tsx
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import umbrellaIcon from "@assets/NDC.png"; // ✅ Use NDC umbrella logo (rename your NDC.png to this)
+import umbrellaIcon from "@assets/NDC.png"; // ✅ NDC umbrella logo
 import { useAuth } from "../../context/AuthContext";
 import type { User } from "../../types/User";
 
@@ -9,7 +9,7 @@ export default function Navbar() {
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
-  // ✅ Dynamically generate user's constituency URL for Home button
+  // ✅ User home URL
   const storedUserStr = localStorage.getItem("lastUser");
   const storedUser = storedUserStr ? (JSON.parse(storedUserStr) as User) : null;
   const userConstituencyUrl = storedUser
@@ -45,7 +45,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* ✅ Toggle button for mobile */}
+        {/* ✅ Toggle for mobile */}
         <button
           className="navbar-toggler"
           type="button"
@@ -58,41 +58,50 @@ export default function Navbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* ✅ Collapsible links */}
+        {/* ✅ Links */}
         <div className={`collapse navbar-collapse ${isOpen ? "show" : ""}`} id="navbarNav">
           <ul className="navbar-nav ms-auto" style={{ fontSize: "0.9rem", whiteSpace: "nowrap" }}>
             {/* Headquarters */}
             <li className="nav-item">
-              <Link className="nav-link text-light" to="/nhqt">HQ</Link>
+              <Link className="nav-link text-light" to="/nhqt">
+                HQ
+              </Link>
             </li>
 
-            {/* Other links */}
+            {/* Static links */}
             <li className="nav-item">
-              <Link className="nav-link text-light" to="/presidents">Presidents</Link>
+              <Link className="nav-link text-light" to="/presidents">
+                Presidents
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-light" to="/founding-fathers">Founders</Link>
+              <Link className="nav-link text-light" to="/founding-fathers">
+                Founders
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-light" to="/executives">Executives</Link>
+              <Link className="nav-link text-light" to="/executives">
+                Executives
+              </Link>
             </li>
 
-            {/* Login / Logout */}
-            {user ? (
+            {/* ✅ Replaced Login → Executive Records */}
+            <li className="nav-item">
+              <Link className="nav-link text-warning fw-bold" to="/all-executive-records-ndc">
+                📊 Executive Records
+              </Link>
+            </li>
+
+            {/* Logout */}
+            {user && (
               <li className="nav-item">
                 <Link className="nav-link text-danger fw-bold" to="/logout">
                   Logout
                 </Link>
               </li>
-            ) : (
-              <li className="nav-item">
-                <Link className="nav-link text-light" to="/login">
-                  Login
-                </Link>
-              </li>
             )}
 
-            {/* ✅ Home button */}
+            {/* ✅ Home */}
             {user && (
               <li className="nav-item">
                 <Link className="nav-link text-light" to={userConstituencyUrl}>
@@ -101,7 +110,7 @@ export default function Navbar() {
               </li>
             )}
 
-            {/* ✅ Admin-only links */}
+            {/* ✅ Admin-only */}
             {user?.role === "executive" && (
               <>
                 <li className="nav-item">

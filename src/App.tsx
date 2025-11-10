@@ -58,7 +58,7 @@ import NCouncil2020_2024 from "./pages/National/Council/N-Council2020_2024";
 import NCouncil2024_2028 from "./pages/National/Council/N-Council2024_2028";
 import PollingStationFormatter from "./tools/PollingStationFormatter";
 import PollingStationsPage from "./pages/Generic/BranchExecutivesPage";
-import CoordinatorsPage from "./pages/Generic/CoordinatorsPage";
+import CoordinatorsPage from "./pages/Generic/WardExecutivessPage";
 import RegionalEldersPage from "./pages/Generic/RegionalEldersPage";
 import ConstituencyExecutivesPage from "./pages/Generic/ConstituencyExecutivesPage";
 import ConstituencyEldersPage from "./pages/Generic/ConstituencyEldersPage";
@@ -381,6 +381,10 @@ import Dashboard from "./pages/Dashboard";
 // Generic Pages
 import BlogPostPage from "./pages/Generic/BlogPostPage";
 import ConstituencyPage from "./pages/Generic/ConstituencyPage";
+import AllExecutiveRecordsNDC from "@pages/AllExecutiveRecordsNDC";
+// NDC Executive Record Pages
+import RegionalExecutiveRecordsNDC from "@pages/RegionalExecutiveRecordsNDC";
+import ConstituencyExecutiveRecordsNDC from "@pages/ConstituencyExecutiveRecordsNDC";
 
 // Lazy-loaded pages
 const LazyUserSelfPlacement = React.lazy(() => import("@pages/UserSelfPlacement"));
@@ -503,6 +507,7 @@ function App() {
           <Route path="/self-placement" element={<LazyUserSelfPlacement />} />
           <Route path="/dashboard" element={<LazyDashboardPage />} />
           <Route path="/national-headquarters" element={<LazyNationalHeadquartersPage />} />
+          <Route path="/all-executive-records-ndc" element={<AllExecutiveRecordsNDC />} />
           <Route
             path="/regions/:region/constituencies/:constituency"
             element={<LazyConstituencyPage />}
@@ -511,7 +516,15 @@ function App() {
           path="/regions/:region/constituencies/:constituency"
           element={<ConstituencyPage />}
         />
-
+        {/* ✅ NDC Executive Record Routes */}
+        <Route
+          path="/regions/:region/executive-records"
+          element={<RegionalExecutiveRecordsNDC />}
+        />
+        <Route
+          path="/regions/:region/constituencies/:constituency/executive-records"
+          element={<ConstituencyExecutiveRecordsNDC />}
+        />
         <Route
           path="/regions/western-north/constituencies/bia-east"
           element={<BiaEastConstituencyHome />}
